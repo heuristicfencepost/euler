@@ -44,6 +44,12 @@ object Euler4 {
 
       if (candidates == Stream.empty)
         return 0
+
+      // A nice pruning optimization; if the square of the current candidate head is less
+      // than the current max then there's no way we can beat it by multiplying the head
+      // times a smaller value.
+      if ((candidates.head ^ 2) < max)
+        return 0
       println("findMaxPalindrome starting with " + candidates.head)
       findPalindrome(candidates) match {
 
@@ -52,6 +58,8 @@ object Euler4 {
       }
     }
 
+    // If we assume a palindrome > 900000 exists then this value must also end with a 9, meaning
+    // it can only be odd.  We thus need only consider half the possible sample set.
     val candidates =
       for { i <- 999.to(1,-2)}
         yield i
