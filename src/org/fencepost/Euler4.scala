@@ -59,7 +59,8 @@ object Euler4 {
     }
 
     // If we assume a palindrome > 900000 exists then this value must also end with a 9, meaning
-    // it can only be odd.  We thus need only consider half the possible sample set.
+    // it can only be odd.  We thus need only consider half the possible sample set.  This could
+    // be revised if no palindrome beginning with 9 were found.
     val candidates =
       for { i <- 999.to(1,-2)}
         yield i
