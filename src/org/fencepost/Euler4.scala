@@ -9,12 +9,10 @@ object Euler4 {
   // Basic test for a palindrome
   def isPalindrome(n:String):Boolean = {
 
-    if (n.length == 1)
-      return true
     palindromePattern.unapplySeq(n) match {
 
       case Some(matches) =>
-        if (matches(1).length == 0) true else isPalindrome(matches(1))
+        if (matches(1).length == 0 || matches(1).length == 1) true else isPalindrome(matches(1))
       case None => false
     }
   }
