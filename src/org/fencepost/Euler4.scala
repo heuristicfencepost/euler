@@ -4,50 +4,38 @@ import scala.math.max
 
 object Euler4 {
 
+  val palindromePattern = """(\d)(\d*?)\1""".r
+
+  // Basic test for a palindrome
+  def isPalindrome(n:String):Boolean = {
+
+    if (n.length == 1)
+      return true
+    palindromePattern.unapplySeq(n) match {
+
+      case Some(matches) =>
+        if (matches(1).length == 0) true else isPalindrome(matches(1))
+      case None => false
+    }
+  }
+
+  // Multiply the input term by all values equal to or less than that term.
+  // Return the largest palindrome (if any) created by these multiplications.
+  def findPalindrome(term1:Int):Option[Int] = {
+
+    println("findPalindrome, term1: " + term1)
+    if (term1 == 1)
+      return None
+    val terms = (term1.to(1,-1)) toStream
+    val rv = terms.map(_*term1).find { v => isPalindrome(v.toString()) }
+    rv match {
+
+      case None => findPalindrome(terms.tail.head)
+      case x => x
+    }
+  }
+
   def main(args: Array[String]): Unit = {
-
-    // Basic test for a palindrome
-    def isPalindrome(n:String):Boolean = {
-
-      val len = n.length
-      if (len <= 1)
-        return false
-
-      // Strings of size 1 are by definition equivalent backwards and forwards
-      //if (len == 1)
-      //  return true
-
-      // We now know we've got at least two characters in the string.  If they
-      // don't match there's no point in going on
-      if (n.charAt(0) != n.charAt(len - 1))
-        return false
-
-      // Anything larger than exactly two characters needs a recursive call
-      if (len > 2)
-        return isPalindrome(n.substring(1,len - 1))
-
-      // At this point we have a string of exactly two identical characters.
-      // This is the base case for our recursive definition of isPalindrome()
-      true
-    }
-
-    // Find any palindrome containing the head of the current candidate list as one
-    // of the two terms involved.  Do so by multiplying the head by all smaller
-    // values and returning the first palindrome we find (since the first combination
-    // of the head of the candidate list and another value in the candidate list
-    // must be the largest possible value containing the candidate if we're moving
-    // in descending order... which we are by virtue of the recursion).'
-    def findPalindrome(candidates:Stream[Int]):Option[Int] = {
-
-      if (candidates.size == 0)
-        return None
-      val rv = candidates.tail.map(_*candidates.head).find { v:Int => isPalindrome(v.toString()) }
-      rv match {
-
-        case None => findPalindrome(candidates.tail)
-        case x => x
-      }
-    }
 
     // Driving recursive function: return a palindrome built from the current 
     // candidate list or whatever comes back from the recursive call, whichever
@@ -62,8 +50,7 @@ object Euler4 {
       // times a smaller value.
       if ((candidates.head ^ 2) < curr)
         return 0
-      println("findMaxPalindrome starting with " + candidates.head)
-      findPalindrome(candidates) match {
+      findPalindrome(candidates.head) match {
 
         case Some(x) => return max(curr,max(x,findMaxPalindrome(candidates.tail,curr)))
         case None => return max(curr,findMaxPalindrome(candidates.tail,curr))
