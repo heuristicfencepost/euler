@@ -4,24 +4,24 @@ import scala.math.sqrt
 
 object Euler3 {
 
-  def main(args: Array[String]): Unit = {
+  def nat(n:Long):Stream[Long] = Stream.cons(n,nat(n + 1))
 
-    def nat(n:Long):Stream[Long] = Stream.cons(n,nat(n + 1))
+  def sieve(s: Stream[Long]): Stream[Long] =
+   Stream.cons(s.head, sieve(s.tail filter { _ % s.head != 0 }))
 
-    def sieve(s: Stream[Long]): Stream[Long] =
-     Stream.cons(s.head, sieve(s.tail filter { _ % s.head != 0 }))
+  def primes = sieve(nat(2))
 
-    def primes = sieve(nat(2))
+  def factorization(candidates:Stream[Long],target:Long,thusfar:List[Long]):List[Long] = {
 
-    def factorization(candidates:Stream[Long],target:Long,thusfar:List[Long]):List[Long] = {
+    if ((1L /: thusfar)(_*_) == target) { thusfar }
+    else {
 
-      if ((1L /: thusfar)(_*_) == target) { thusfar }
-      else {
-        
-        val head = candidates.head
-        factorization(candidates.tail,target,if (target % head == 0) thusfar ::: List(head) else thusfar)
-      }
+      val head = candidates.head
+      factorization(candidates.tail,target,if (target % head == 0) thusfar ::: List(head) else thusfar)
     }
+  }
+
+  def main(args: Array[String]): Unit = {
 
     val target = 600851475143L
 
