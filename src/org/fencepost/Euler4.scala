@@ -4,15 +4,20 @@ import scala.math.max
 
 object Euler4 {
 
+  // Absolutely must use conservative matching and the backref here
   val palindromePattern = """(\d)(\d*?)\1""".r
 
   // Basic test for a palindrome
   def isPalindrome(n:String):Boolean = {
 
+    // Base case; empty string and single characters are by definition palindromes.
+    // Place this test up front so that we can handle input values of a single
+    // character.
+    if (n.length == 0 || n.length == 1)
+      return true
     palindromePattern.unapplySeq(n) match {
 
-      case Some(matches) =>
-        if (matches(1).length == 0 || matches(1).length == 1) true else isPalindrome(matches(1))
+      case Some(matches) => isPalindrome(matches(1))
       case None => false
     }
   }
@@ -40,6 +45,10 @@ object Euler4 {
     // be revised if no palindrome beginning with 9 were found.
     var result = (0 /: 999.to(1,-2)) { (curr,candidate) =>
 
+      // A simple optimization; if the square of the candidate value is less than
+      // our current max there's no point in continuing; since the candidate times a
+      // smaller value will always be less than the candidate squared there's no
+      // way it will be able to exceed the current max.
       if ((candidate ^ 2) < curr)
         curr
       findPalindrome(candidate) match {
