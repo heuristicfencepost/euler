@@ -1,5 +1,7 @@
 package org.fencepost
 
+import scala.math.sqrt
+
 object Euler3 {
 
   def main(args: Array[String]): Unit = {
@@ -30,6 +32,6 @@ object Euler3 {
     // then n = p×q and if q were smaller than p, n would have earlier been detected as being divisible by
     // q or a prime factor of q"
     // (http://en.wikipedia.org/wiki/Trial_division)
-    println(factorization(primes takeWhile (_ < Math.sqrt(target)),target,List[Long](1)).last)
+    println(factorization(primes takeWhile (_ < sqrt(target)),target,List[Long](1)).last)
   }
 }
