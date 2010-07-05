@@ -1,9 +1,12 @@
 package org.fencepost
 
+import scala.math.max
+
 object Euler4 {
 
   def main(args: Array[String]): Unit = {
 
+    // Basic test for a palindrome
     def isPalindrome(n:String):Boolean = {
 
       val len = n.length
@@ -28,6 +31,12 @@ object Euler4 {
       true
     }
 
+    // Find any palindrome containing the head of the current candidate list as one
+    // of the two terms involved.  Do so by multiplying the head by all smaller
+    // values and returning the first palindrome we find (since the first combination
+    // of the head of the candidate list and another value in the candidate list
+    // must be the largest possible value containing the candidate if we're moving
+    // in descending order... which we are by virtue of the recursion).'
     def findPalindrome(candidates:Stream[Int]):Option[Int] = {
 
       if (candidates.size == 0)
@@ -40,7 +49,10 @@ object Euler4 {
       }
     }
 
-    def findMaxPalindrome(candidates:Stream[Int],max:Int):Int = {
+    // Driving recursive function: return a palindrome built from the current 
+    // candidate list or whatever comes back from the recursive call, whichever
+    // is larger.
+    def findMaxPalindrome(candidates:Stream[Int],curr:Int):Int = {
 
       if (candidates == Stream.empty)
         return 0
@@ -48,13 +60,13 @@ object Euler4 {
       // A nice pruning optimization; if the square of the current candidate head is less
       // than the current max then there's no way we can beat it by multiplying the head
       // times a smaller value.
-      if ((candidates.head ^ 2) < max)
+      if ((candidates.head ^ 2) < curr)
         return 0
       println("findMaxPalindrome starting with " + candidates.head)
       findPalindrome(candidates) match {
 
-        case Some(x) => return Math.max(max,Math.max(x,findMaxPalindrome(candidates.tail,max)))
-        case None => return Math.max(max,findMaxPalindrome(candidates.tail,max))
+        case Some(x) => return max(curr,max(x,findMaxPalindrome(candidates.tail,curr)))
+        case None => return max(curr,findMaxPalindrome(candidates.tail,curr))
       }
     }
 
