@@ -10,7 +10,7 @@ object Euler7 {
     var count = 21
     while (primes.length < 10001) {
 
-      // Use primes.tail instead or primes here; no need to compare to 2
+      // Use primes.tail instead of primes here; no need to compare to 2
       // since we're only considering odd candidates.
       if (primes.tail.filter(count % _ == 0).length == 0)
         primes = primes ::: List(count)
