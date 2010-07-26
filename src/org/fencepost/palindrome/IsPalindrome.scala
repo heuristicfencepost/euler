@@ -2,6 +2,15 @@ package org.fencepost.palindrome
 
 object IsPalindrome {
 
+  // Utility method to convert an input int into a list of bytes, one for each base 10
+  // integer making up the input list.  For example 123 would be converted to List(1,2,3)
+  private def toList(arg:Int):List[Int] = if (arg <= 9) List(arg) else toList(arg / 10) ::: List(arg % 10)
+
+  // Tail-call version of toList above
+  private def toListTCHelper(arg:Int):List[Int] = if (arg <= 9) List(arg) else arg % 10 :: toListTCHelper(arg / 10)
+
+  private def toListTC(arg:Int):List[Int] = toListTCHelper(arg).reverse
+
   // Absolutely must use conservative matching and the backref here
   val palindromePattern = """(\d)(\d*?)\1""".r
 
@@ -33,8 +42,6 @@ object IsPalindrome {
       byStringBasic(n.substring(1,n.length - 1))
   }
 
-  private def toList(arg:Int):List[Int] = if (arg <= 9) List(arg) else toList(arg / 10) ::: List(arg % 10)
-
   private def byIntHelper(arg:List[Int]):Boolean = {
 
     if (arg.length == 0 || arg.length == 1)
@@ -52,7 +59,7 @@ object IsPalindrome {
     if (n <= 9)
       return true
 
-    byIntHelper(toList(n))
+    byIntHelper(toListTC(n))
   }
 
   private def byIntMatchHelper(arg:List[Int]):Boolean = {
@@ -72,6 +79,6 @@ object IsPalindrome {
     if (n <= 9)
       return true
 
-    byIntMatchHelper(toList(n))
+    byIntMatchHelper(toListTC(n))
   }
 }
