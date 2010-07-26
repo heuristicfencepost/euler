@@ -2,8 +2,9 @@ package org.fencepost.palindrome
 
 object IsPalindrome {
 
-  // Utility method to convert an input int into a list of bytes, one for each base 10
-  // integer making up the input list.  For example 123 would be converted to List(1,2,3)
+  // Utility method to convert an input int into a list of integers, one for each digit in
+  // the base 10 representation of the input int.  For example 123 would be converted to
+  // List(1,2,3)
   private def toList(arg:Int):List[Int] = if (arg <= 9) List(arg) else toList(arg / 10) ::: List(arg % 10)
 
   // Tail-call version of toList above.  Note that this returns the list in inverse order so

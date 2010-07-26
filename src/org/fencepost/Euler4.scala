@@ -2,6 +2,7 @@ package org.fencepost
 
 import scala.math.max
 
+// Use the pattern-matching integer-based predicate for now
 import org.fencepost.palindrome.IsPalindrome.{byIntMatch => isPalindrome}
 
 object Euler4 {
@@ -10,7 +11,6 @@ object Euler4 {
   // Return the largest palindrome (if any) created by these multiplications.
   def findPalindrome(term1:Int):Option[Int] = {
 
-    //println("findPalindrome, term1: " + term1)
     if (term1 == 1)
       return None
     val terms = (term1.to(1,-1)) toStream
