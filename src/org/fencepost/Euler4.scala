@@ -2,25 +2,9 @@ package org.fencepost
 
 import scala.math.max
 
+import org.fencepost.palindrome.IsPalindrome.{byIntMatch => isPalindrome}
+
 object Euler4 {
-
-  // Absolutely must use conservative matching and the backref here
-  val palindromePattern = """(\d)(\d*?)\1""".r
-
-  // Basic test for a palindrome
-  def isPalindrome(n:String):Boolean = {
-
-    // Base case; empty string and single characters are by definition palindromes.
-    // Place this test up front so that we can handle input values of a single
-    // character.
-    if (n.length == 0 || n.length == 1)
-      return true
-    palindromePattern.unapplySeq(n) match {
-
-      case Some(matches) => isPalindrome(matches(1))
-      case None => false
-    }
-  }
 
   // Multiply the input term by all values equal to or less than that term.
   // Return the largest palindrome (if any) created by these multiplications.
@@ -30,7 +14,7 @@ object Euler4 {
     if (term1 == 1)
       return None
     val terms = (term1.to(1,-1)) toStream
-    val rv = terms.map(_*term1).find { v => isPalindrome(v.toString()) }
+    val rv = terms.map(_*term1).find { v => isPalindrome(v) }
     rv match {
 
       case None => findPalindrome(terms.tail.head)
