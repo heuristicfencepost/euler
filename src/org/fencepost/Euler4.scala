@@ -5,6 +5,10 @@ import scala.math.max
 // Use the pattern-matching integer-based predicate for now
 import org.fencepost.palindrome.IsPalindrome.{byIntMatch => isPalindrome}
 
+// Also need implicit conversion, Int => List[Int]
+import org.fencepost.palindrome.IsPalindrome.int2listTC
+import org.fencepost.palindrome.IsPalindrome.int2string
+
 object Euler4 {
 
   // Multiply the input term by all values equal to or less than that term.
