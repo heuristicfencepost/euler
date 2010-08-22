@@ -3,7 +3,7 @@ package org.fencepost.palindrome
 import org.scalatest.Suite
 
 // Make sure the implicit conversions are in scope as well
-import IsPalindrome.int2listTC
+import IsPalindrome.int2list
 import IsPalindrome.int2string
 
 class IsPalindromeTest extends Suite {

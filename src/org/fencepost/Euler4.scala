@@ -5,8 +5,8 @@ import scala.math.max
 // Use the pattern-matching integer-based predicate for now
 import org.fencepost.palindrome.IsPalindrome.{byIntMatch => isPalindrome}
 
-// Also need implicit conversion, Int => List[Int]
-import org.fencepost.palindrome.IsPalindrome.int2listTC
+// Also need implicit conversion, Int => String and Int => List[Int]
+import org.fencepost.palindrome.IsPalindrome.int2list
 import org.fencepost.palindrome.IsPalindrome.int2string
 
 object Euler4 {
