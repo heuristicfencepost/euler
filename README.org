@@ -1,0 +1,36 @@
+* Overview
+
+This repository contains various solutions to the first few [[http://projecteuler.net/][Project Euler]] problems in Scala.  These solutions are not an end in themselves; there are plenty of solutions
+to these problems available on the Web and I don't claim that anything here is more novel or creative than what you'll find elsewhere.  My intent is to use these problems
+as a point of departure to explore Scala.  More precisely these solutions have been generated while reading the [[http://www.artima.com/shop/programming_in_scala]["stairway" book]]
+from Oderskey, Spoon and Venners.
+
+* Problems not included
+
+A few of the initial problems don't require any computation at all; they can be solved fairly easily with a bit of algebra.  Since no computation is required
+to solve these problems they are ignored.  A brief overview of the omitted problems can be found below.
+
+** Euler 5
+
+We need to build a list of the integers which must be included in our factorization.  We begin with the primes; by definition they have to be there:
+
+2 3 5 7 11 13 17 19
+
+How about the other numbers between 2 and 20?  We don't need to worry about 6 since we've already got 2 and 3.  We also don't need to worry about 10, 14 and 15
+for the same reason (2 * 5, 2 * 7 and 3 * 5 respectively).  That leaves us with 4, 8, 9, 12, 16, and 18.
+
+The smallest integer we can add here is another two.  Does that help us?
+
+2 3 5 7 11 13 17 19 2
+
+This takes care of 4 (2 * 2) and 12 (2 * 2 * 3).  Adding a 3 provides a similar benefit:
+
+2 3 5 7 11 13 17 19 2 3
+
+We've now come up with 9 (3 * 3) and 18 (3 * 3 * 2).  Only 8 and 16 remain, and we can include both of them by adding a few more integers:
+
+2 3 5 7 11 13 17 19 2 3 2 2
+
+Multiplying these values together gives us 232792560, which just happens to be the answer we're looking for.
+
+** Euler 6
