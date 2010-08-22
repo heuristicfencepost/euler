@@ -7,11 +7,20 @@ object IsPalindrome {
   // List(1,2,3)
   private def int2list(arg:Int):List[Int] = if (arg <= 9) List(arg) else int2list(arg / 10) ::: List(arg % 10)
 
-  // Tail-call version of toList above.  Note that this returns the list in inverse order so
-  // we implement this as a helper; the actual conversion function below will handle the reversal.
-  private def int2listTCHelper(arg:Int):List[Int] = if (arg <= 9) List(arg) else arg % 10 :: int2listTCHelper(arg / 10)
+  // Tail-call version of toList above.  Using an accumulator array and the default argument
+  // functionality introduced in Scala 2.8.0 allows us to implement this function without
+  // a helper.
+  //
+  // Or at least it should; looks like algorithm for resolving implicit conversions doesn't
+  // recognize default parameters... ?
+  implicit def int2listTC(arg:Int, acc:List[Int] = List()):List[Int] = {
 
-  implicit def int2listTC(arg:Int):List[Int] = int2listTCHelper(arg).reverse
+    val newmember = arg / 10
+    if (arg <= 9)
+      acc ::: List(newmember)
+    else
+      int2listTC(arg % 10,acc ::: List(newmember))
+  }
 
   // Add an implicit type conversion to make the string-based methods happy as well
   implicit def int2string(arg:Int):String = arg.toString
@@ -49,7 +58,7 @@ object IsPalindrome {
     else
       byString(n.substring(1,n.length - 1))
   }
-
+//
   // Recursive helper function to check for a palindrome by comparing the first
   // and last integers in a list
   def byInt(arg:List[Int]):Boolean = {
