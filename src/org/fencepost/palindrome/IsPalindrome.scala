@@ -1,31 +1,52 @@
 package org.fencepost.palindrome
 
+import scala.collection.mutable.ListBuffer
+
 object IsPalindrome {
 
   // Utility method to convert an input int into a list of integers, one for each digit in
   // the base 10 representation of the input int.  For example 123 would be converted to
   // List(1,2,3)
-  //private def int2list(arg:Int):List[Int] = if (arg <= 9) List(arg) else int2list(arg / 10) ::: List(arg % 10)
 
-  // Tail-call version of toList above.  Using an accumulator array and the default argument
+  // Naive implementation based on list concatenation
+  //implicit def int2list(arg:Int):List[Int] = if (arg <= 9) List(arg) else int2list(arg / 10) ::: List(arg % 10)
+
+  // Tail-call version of int2list above.  Using an accumulator array and the default argument
   // functionality introduced in Scala 2.8.0 allows us to implement this function without
   // a helper.
   //
   // Or at least it should; looks like algorithm for resolving implicit conversions doesn't
-  // recognize default parameters... ?
-  def int2listTC(arg:Int, acc:List[Int] = List()):List[Int] = {
+  // recognize default parameters... ?  The extra int2list declaration below is required
+  // in order to make implicit conversions work correctly.  Attempts to use int2listTC()
+  // directly for implicit conversion fails with type errors consistent with an environment
+  // which had no implicit conversions.
+  //def int2listTC(arg:Int, acc:List[Int] = List()):List[Int] = {
+  //
+  //  val newmember = arg % 10
+  //  if (arg <= 9)
+  //    acc ::: List(newmember)
+  //  else
+  //    int2listTC(arg / 10,acc ::: List(newmember))
+  //}
+  //
+  //implicit def int2list(arg:Int) = int2listTC(arg)
 
-    val newmember = arg % 10
-    if (arg <= 9)
-      acc ::: List(newmember)
-    else
-      int2listTC(arg / 10,acc ::: List(newmember))
+  // The "stairway" book makes the point that the list concatenation operator
+  // runs in O(n) where n is the size of the list on the left.  This does render
+  // the naive implementation unnecessarily inefficient for very large integers,
+  // especially when the ListBuffer class exists to solve this very problem.
+  // It may not be functional but it does the job.
+  implicit def int2list(arg:Int):List[Int] = {
+
+    val buff = new ListBuffer[Int]
+    var counter = arg
+    while (counter > 9) {
+      buff += (counter % 10)
+      counter = (counter / 10)
+    }
+    buff += counter
+    buff toList
   }
-
-  // This declaration required to make implicit conversion subsystem happy; attempting
-  // to invoke int2listTC() directly as an implicit conversion causes conversions not
-  // to happen.
-  implicit def int2list(arg:Int) = int2listTC(arg)
 
   // Add an implicit type conversion to make the string-based methods happy as well
   implicit def int2string(arg:Int):String = arg.toString
