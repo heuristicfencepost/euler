@@ -34,3 +34,5 @@ We've now come up with 9 (3 * 3) and 18 (3 * 3 * 2).  Only 8 and 16 remain, and 
 Multiplying these values together gives us 232792560, which just happens to be the answer we're looking for.
 
 ** Euler 6
+
+The sum of integers between 1 and n and the sum of squares in the same range are well-known values (see [[http://en.wikipedia.org/wiki/List_of_mathematical_series][Wikipedia]] for details).  The rest is straight arithmetic.
