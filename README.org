@@ -1,9 +1,8 @@
 * Overview
 
-This repository contains various solutions to the first few [[http://projecteuler.net/][Project Euler]] problems in Scala.  These solutions are not an end in themselves; there are plenty of solutions
-to these problems available on the Web and I don't claim that anything here is more novel or creative than what you'll find elsewhere.  My intent is to use these problems
-as a point of departure to explore Scala.  More precisely these solutions have been generated while reading the [[http://www.artima.com/shop/programming_in_scala]["stairway" book]]
-from Oderskey, Spoon and Venners.
+This repository contains various solutions to the first few [[http://projecteuler.net/][Project Euler]] problems in a number of languages.  These solutions are not an end in themselves; there are plenty 
+of solutions to these problems available on the Web and I don't claim that anything here is more novel or creative than what you'll find elsewhere.  My intent is to use 
+these problems as a means to explore the languages in question.  If they are useful to you in some way so much the better.
 
 * Problems not included
 
